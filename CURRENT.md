@@ -15,7 +15,7 @@
 ## Global State
 
 ```text
-Last updated: Hospital Admin Dashboard strictly matching design-references/hospital/hospital-admin/dashboard.png Implemented & Verified
+Last updated: Hospital Admin Add Doctor Page strictly matching design-references/hospital/hospital-admin/add-doctor.png Implemented & Verified
 Current phase: Phase 5 — Hospital Admin Frontend
 
 Patient Flutter foundation: COMPLETE_VERIFIED
@@ -32,9 +32,44 @@ Patient Interaction-Wiring Audit: COMPLETE_VERIFIED
 Patient Login Screen (design reference): COMPLETE_VERIFIED
 Hospital design foundation: COMPLETE_VERIFIED
 Hospital Admin Dashboard: COMPLETE_VERIFIED
+Hospital Admin Hospital Profile: COMPLETE_VERIFIED
+Hospital Admin Doctor Management: COMPLETE_VERIFIED
+Hospital Admin Add Doctor: COMPLETE_VERIFIED
 System Admin design foundation: NOT_STARTED
 
-Current task: Implemented Hospital Admin Dashboard strictly matching design-references/hospital/hospital-admin/dashboard.png (with header sizing and flex layout fix):
+Current task: Implemented Add Doctor page strictly matching design-references/hospital/hospital-admin/add-doctor.png:
+- Breadcrumb navigation: "Doctor Management > Add Doctor" with back-navigation to /hospital-admin/doctors.
+- Page Header: "Add Doctor" title, description, and live date "Thursday, 12 June 2025".
+- Left Column (3 Cards):
+  * Basic Information Card: Full Name *, Gender * dropdown, Date of Birth * calendar picker, Email Address *, Phone Number * with +91 prefix, Alternate Phone with +91 prefix.
+  * Professional Information Card: Specialty * dropdown (14 specialties), Department * dropdown (12 departments), Medical License No. *, Qualification *, Experience (Years) *, Consultation Type dropdown.
+  * Employment Details Card: Joining Date * calendar picker, Employment Type * dropdown (Full-Time, Part-Time, Visiting, Contractual), Consultation Fee (₹), Additional Notes multiline textarea.
+- Right Column (2 Cards):
+  * Profile Photo Card: Center circular avatar preview, "Upload Doctor Photo", format hint (JPG, PNG Max 2 MB), and interactive "Choose File" button with live preview and remove actions.
+  * Document Upload Card: 5 document upload rows with upload icon, "Choose File" button, dynamic file selection label, remove trigger, and bottom notice badge (Accepted formats: PDF, JPG, PNG | Max 5 MB).
+- Bottom Action Footer Bar: "Cancel" button, "Save as Draft" button with toast notification, and "+ Add Doctor" submit button with comprehensive validation and success toast.
+- Sidebar Integration: "Add Doctor" navigation item routes to /hospital-admin/doctors/add with active pill highlight.
+- Verification: `npm run build` compiled 8 static routes with 0 errors; verified with HTTP 200 OK on /hospital-admin/doctors/add.
+- Top Metrics Row: 4 stat cards (Total Doctors 128 ↑ 6%, Active Doctors 112 ↑ 5%, On Leave 8 —, Inactive 6 ↓ 2%) + compact, properly sized electric-blue "+ Add Doctor" action button (h-42px px-5 rounded-xl vertically centered matching the reference design).
+- Main Table Card:
+  * Tab filtering: "All Doctors (128)", "Active (112)", "On Leave (8)", "Inactive (6)".
+  * Search bar: real-time query filtering across name, specialty, department, and license ID.
+  * 10 Doctor Rows: circular avatar thumbnails, doctor names, qualifications, specialties, departments, license IDs, experience, colored status pill badges (Active green, On Leave amber, Inactive red), and join dates.
+  * Actions: "View" modal trigger & "···" options dropdown for inline status changes.
+  * Pagination footer: "Showing 1–10 of 128 doctors" with navigation buttons (<, 1, 2, 3, ..., 13, >).
+- Interactive Modals:
+  * Doctor Profile & Credentials Modal: Full clinical details, department, license ID, experience, and direct status switching.
+  * Add New Doctor Modal: Practitioner registration form with immediate table insertion and dynamic metric recalculation.
+- Sidebar Routing: Integrated `/hospital-admin/doctors` route, connecting Dashboard (`/hospital-admin`), Hospital Profile (`/hospital-admin/profile`), and Doctor Management (`/hospital-admin/doctors`).
+- Verification: `npm run build` compiled 7 static routes with 0 errors; verified with HTTP 200 OK on `/hospital-admin/doctors`.
+- Bottom Section (3 Cards):
+  * Accreditations & Certifications: High-resolution NABH, ISO, NABL emblems with un-truncated titles, green badges, and validity dates.
+  * Facilities & Services: 8-item 2-column checklist with green checkmarks.
+  * Compliance Documents: Hospital Registration Certificate, NABH Certificate, Fire Safety Certificate with download actions.
+- Top Header: Added ChevronDown caret beside Hospital Administrator profile.
+- Hydration & Image Warning Fixes: Added `suppressHydrationWarning` to `<html>` and `<body>` in `layout.tsx` to prevent Chrome Extension / emulator attribute mismatch warnings, and added responsive `sizes` attribute to the hospital hero image.
+- Sidebar Routing: Integrated Next.js routing connecting Dashboard (`/hospital-admin`) and Hospital Profile (`/hospital-admin/profile`).
+- Verification: `npm run build` compiled 6 static routes with 0 errors; verified with HTTP 200 OK on `/hospital-admin/profile`.
 - Fixed header vertical squish & scrollbar encroachment: added `shrink-0 min-h-[68px] h-[68px]`, removed nested `overflow-y-auto h-screen` on inner content container to use natural window scroll, preventing flex-shrink compression of the search bar, bell icon, and profile.
 - Top Header: Search input ("Search doctors, departments, staff, or system logs..."), Notification Bell with count badge (3), Rajesh Kumar Administrator Profile with photorealistic avatar.
 - Left Sidebar: Light sky background gradient (`bg-gradient-to-b from-[#EFF6FD] via-[#F3F8FE] to-[#E7F3FD]`) with border `#D9E8F7`, active pill with white card elevation & soft blue border, Medical Cross Logo ("AI Healthcare / CityCare Hospital"), 11 navigation links, bottom callout card ("Building a Safer Healthier Tomorrow / AI Healthcare / CityCare Hospital / v1.0.0"), scrollbar completely hidden across all browsers.
@@ -60,7 +95,7 @@ Current task: Implemented Hospital Admin Dashboard strictly matching design-refe
 - Design reference saved to `design-references/hospital/hospital-admin/dashboard.png`.
 - Verification: `npm run build` static generation clean (100% exit code 0); `next dev` verified with HTTP 200 OK on `/hospital-admin` and `/` redirect.
 Implementation status: All Next.js TypeScript components built and verified without errors.
-Planning status: Hospital Admin Dashboard complete; awaiting next user instructions.
+Planning status: Hospital Admin Add Doctor complete; awaiting next user instructions.
 FRONTEND_APPROVED: false
 Backend production work allowed: false
 AI production integration allowed: false

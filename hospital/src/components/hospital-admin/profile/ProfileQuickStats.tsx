@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
 import {
   User,
   Users,
@@ -26,37 +25,37 @@ export const ProfileQuickStats: React.FC<ProfileQuickStatsProps> = ({
     switch (type) {
       case 'doctor':
         return (
-          <div className="w-11 h-11 rounded-2xl bg-[#FFF4E5] text-[#F59E0B] flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-full bg-[#FFF4E5] text-[#F59E0B] flex items-center justify-center shrink-0">
             <User className="w-5 h-5" strokeWidth={2.2} />
           </div>
         );
       case 'staff':
         return (
-          <div className="w-11 h-11 rounded-2xl bg-[#EAF2FD] text-[#1877F2] flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-full bg-[#EAF2FD] text-[#1877F2] flex items-center justify-center shrink-0">
             <Users className="w-5 h-5" strokeWidth={2.2} />
           </div>
         );
       case 'department':
         return (
-          <div className="w-11 h-11 rounded-2xl bg-[#EAF2FD] text-[#1877F2] flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-full bg-[#EAF2FD] text-[#1877F2] flex items-center justify-center shrink-0">
             <Building2 className="w-5 h-5" strokeWidth={2.2} />
           </div>
         );
       case 'beds':
         return (
-          <div className="w-11 h-11 rounded-2xl bg-[#E6F8F0] text-[#10B981] flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-full bg-[#E6F8F0] text-[#10B981] flex items-center justify-center shrink-0">
             <Bed className="w-5 h-5" strokeWidth={2.2} />
           </div>
         );
       case 'icu':
         return (
-          <div className="w-11 h-11 rounded-2xl bg-[#EAF2FD] text-[#1877F2] flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-full bg-[#EAF2FD] text-[#1877F2] flex items-center justify-center shrink-0">
             <Activity className="w-5 h-5" strokeWidth={2.2} />
           </div>
         );
       case 'emergency':
         return (
-          <div className="w-11 h-11 rounded-2xl bg-[#FEECEC] text-[#EF4444] flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-full bg-[#FEECEC] text-[#EF4444] flex items-center justify-center shrink-0">
             <Ambulance className="w-5 h-5" strokeWidth={2.2} />
           </div>
         );
@@ -68,28 +67,31 @@ export const ProfileQuickStats: React.FC<ProfileQuickStatsProps> = ({
       {stats.map((item) => (
         <div
           key={item.id}
-          className="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-xs flex items-center gap-3.5 hover:border-blue-200 transition-all duration-150"
+          className="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-xs flex flex-col justify-between hover:border-blue-200 transition-all duration-150"
         >
-          {getIcon(item.iconType)}
-          <div className="flex flex-col min-w-0">
-            <span className="text-xl sm:text-2xl font-bold text-slate-900 leading-tight">
+          {/* Top row: Icon on left, Big number on right */}
+          <div className="flex items-center gap-3">
+            {getIcon(item.iconType)}
+            <span className="text-2xl font-bold text-slate-900 leading-tight">
               {item.value}
             </span>
-            <div className="flex items-center gap-1.5 mt-0.5">
-              <span className="text-[12px] font-medium text-slate-500 truncate">
-                {item.label}
-              </span>
-              {item.viewAllLink && (
-                <button
-                  type="button"
-                  onClick={() => onViewAll?.(item.id)}
-                  className="text-[11px] font-semibold text-[#1877F2] hover:underline flex items-center shrink-0 cursor-pointer"
-                >
-                  <span>View All</span>
-                  <ArrowRight className="w-3 h-3 ml-0.5" />
-                </button>
-              )}
-            </div>
+          </div>
+
+          {/* Bottom row: Label and View All on separate left/right */}
+          <div className="flex items-center justify-between mt-3 text-xs">
+            <span className="text-[12.5px] font-medium text-slate-500">
+              {item.label}
+            </span>
+            {item.viewAllLink && (
+              <button
+                type="button"
+                onClick={() => onViewAll?.(item.id)}
+                className="text-[11.5px] font-semibold text-[#1877F2] hover:underline flex items-center shrink-0 cursor-pointer"
+              >
+                <span>View All</span>
+                <ArrowRight className="w-3 h-3 ml-0.5" />
+              </button>
+            )}
           </div>
         </div>
       ))}

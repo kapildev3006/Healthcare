@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { Search, Bell } from 'lucide-react';
+import { Search, Bell, ChevronDown } from 'lucide-react';
 
 interface HeaderProps {
   searchQuery?: string;
@@ -71,6 +71,7 @@ export const Header: React.FC<HeaderProps> = ({
               Hospital Administrator
             </span>
           </div>
+          <ChevronDown className="w-4 h-4 text-slate-400 shrink-0 ml-0.5" />
         </div>
       </div>
     </header>

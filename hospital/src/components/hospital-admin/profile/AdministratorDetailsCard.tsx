@@ -5,11 +5,10 @@ import {
   UserCheck,
   User,
   Briefcase,
-  BadgePercent,
+  IdCard,
   Phone,
   Mail,
   Edit2,
-  IdCard,
 } from 'lucide-react';
 import { AdministratorInfo } from '../../../features/hospital-admin/profileTypes';
 
@@ -90,14 +89,14 @@ export const AdministratorDetailsCard: React.FC<AdministratorDetailsCardProps> =
           </div>
 
           {/* Email Address */}
-          <div className="flex items-start justify-between gap-4">
+          <div className="flex items-start justify-between gap-3">
             <span className="text-slate-500 font-medium flex items-center gap-2 shrink-0">
               <Mail className="w-4 h-4 text-slate-400" />
               <span>Email Address</span>
             </span>
             <a
               href={`mailto:${admin.email}`}
-              className="font-semibold text-[#1877F2] hover:underline text-right truncate max-w-[200px]"
+              className="font-semibold text-[#1877F2] hover:underline text-right text-[12px] sm:text-[12.5px] break-all"
             >
               {admin.email}
             </a>

@@ -36,32 +36,32 @@ export const AccreditationsCard: React.FC<AccreditationsCardProps> = ({
         </div>
 
         {/* 3 Certifications */}
-        <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2.5">
           {items.map((item) => (
             <div
               key={item.id}
-              className="bg-slate-50/70 border border-slate-100 rounded-xl p-3 flex items-center gap-3 hover:border-blue-100 transition-colors"
+              className="bg-slate-50/70 border border-slate-100 rounded-xl p-2.5 flex items-center gap-2.5 hover:border-blue-100 transition-colors min-w-0"
             >
               {/* Emblem Logo */}
-              <div className="relative w-11 h-11 rounded-lg overflow-hidden shrink-0 bg-white border border-slate-200/70 p-0.5 flex items-center justify-center">
+              <div className="relative w-9 h-9 rounded-lg overflow-hidden shrink-0 bg-white border border-slate-200/60 p-0.5 flex items-center justify-center">
                 <Image
                   src={item.logo}
                   alt={item.name}
-                  width={44}
-                  height={44}
+                  width={36}
+                  height={36}
                   className="object-contain w-full h-full"
                 />
               </div>
 
               {/* Text Info */}
-              <div className="flex flex-col min-w-0">
-                <span className="font-bold text-xs text-slate-900 leading-snug truncate">
+              <div className="flex flex-col min-w-0 overflow-hidden">
+                <span className="font-bold text-[11.5px] text-slate-900 leading-snug truncate">
                   {item.name}
                 </span>
-                <span className="inline-block mt-0.5 px-1.5 py-0.2 rounded-sm text-[10px] font-semibold bg-[#DCFCE7] text-[#16A34A] w-fit">
+                <span className="inline-block mt-0.5 px-1.5 py-0.2 rounded-sm text-[9.5px] font-semibold bg-[#DCFCE7] text-[#16A34A] w-fit">
                   {item.status}
                 </span>
-                <span className="text-[10px] text-slate-400 mt-0.5 truncate">
+                <span className="text-[9.5px] text-slate-400 mt-0.5 truncate">
                   {item.validity}
                 </span>
               </div>
