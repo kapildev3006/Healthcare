@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Sidebar } from '../../components/hospital-admin/Sidebar';
 import { Header } from '../../components/hospital-admin/Header';
 import { GreetingBanner } from '../../components/hospital-admin/GreetingBanner';
@@ -33,6 +34,7 @@ import {
 } from '../../features/hospital-admin/types';
 
 export default function HospitalAdminDashboard() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState('Dashboard');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -198,7 +200,7 @@ export default function HospitalAdminDashboard() {
             {/* Right: Recent Access Audit Activity */}
             <AccessAuditTable
               items={mockRecentAccessAudit}
-              onViewAll={() => showToast('Navigating to Full Access Audit Logs')}
+              onViewAll={() => router.push('/hospital-admin/access-audit')}
               onSelectAudit={(audit) => setSelectedAudit(audit)}
             />
           </div>
@@ -217,7 +219,7 @@ export default function HospitalAdminDashboard() {
             {/* 3. Emergency Access Alerts */}
             <EmergencyAlertsCard
               alerts={mockEmergencyAlerts}
-              onViewAll={() => showToast('Viewing all Emergency Access Audit Events')}
+              onViewAll={() => router.push('/hospital-admin/emergency-access')}
               onSelectAlert={handleEmergencyAlertClick}
             />
 
@@ -235,7 +237,7 @@ export default function HospitalAdminDashboard() {
                 showToast('Verification queue is empty!');
               }
             }}
-            onViewAuditLogs={() => showToast('Opening Audit Logs viewer')}
+            onViewAuditLogs={() => router.push('/hospital-admin/access-audit')}
             onManageDepartments={() => showToast('Opening Department Configuration')}
           />
         </main>

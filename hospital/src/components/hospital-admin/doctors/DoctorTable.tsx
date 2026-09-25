@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import {
   Search,
   Filter,
@@ -35,6 +36,7 @@ export const DoctorTable: React.FC<DoctorTableProps> = ({
   onViewDoctor,
   onStatusChange,
 }) => {
+  const router = useRouter();
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -201,8 +203,15 @@ export const DoctorTable: React.FC<DoctorTableProps> = ({
 
                   {/* Doctor Avatar, Name, Degree */}
                   <td className="py-3 px-3">
-                    <div className="flex items-center gap-3">
-                      <div className="relative w-8 h-8 rounded-full overflow-hidden border border-slate-200 shrink-0 bg-slate-100">
+                    <div
+                      className="flex items-center gap-3 cursor-pointer group"
+                      onClick={() =>
+                        router.push(
+                          `/hospital-admin/doctors/profile?id=${doc.id}`
+                        )
+                      }
+                    >
+                      <div className="relative w-8 h-8 rounded-full overflow-hidden border border-slate-200 shrink-0 bg-slate-100 group-hover:ring-2 group-hover:ring-blue-400 transition-all">
                         <Image
                           src={doc.avatar}
                           alt={doc.name}
@@ -212,7 +221,7 @@ export const DoctorTable: React.FC<DoctorTableProps> = ({
                         />
                       </div>
                       <div className="flex flex-col leading-tight">
-                        <span className="font-bold text-slate-900 text-xs sm:text-[13px] whitespace-nowrap">
+                        <span className="font-bold text-slate-900 group-hover:text-blue-600 text-xs sm:text-[13px] whitespace-nowrap transition-colors">
                           {doc.name}
                         </span>
                         <span className="text-[11px] text-slate-400 font-medium whitespace-nowrap mt-0.5">
@@ -257,7 +266,11 @@ export const DoctorTable: React.FC<DoctorTableProps> = ({
                     <div className="inline-flex items-center gap-1.5 justify-end">
                       <button
                         type="button"
-                        onClick={() => onViewDoctor(doc)}
+                        onClick={() =>
+                          router.push(
+                            `/hospital-admin/doctors/profile?id=${doc.id}`
+                          )
+                        }
                         className="px-3.5 py-1 rounded-lg border border-[#BFDBFE] text-[#1877F2] hover:bg-blue-50 font-semibold text-xs transition-colors cursor-pointer"
                       >
                         View
@@ -278,7 +291,31 @@ export const DoctorTable: React.FC<DoctorTableProps> = ({
 
                         {/* Options Dropdown */}
                         {activeMenuId === doc.id && (
-                          <div className="absolute right-0 mt-1 w-36 bg-white rounded-xl shadow-lg border border-slate-200 py-1.5 z-30 text-left text-xs">
+                          <div className="absolute right-0 mt-1 w-40 bg-white rounded-xl shadow-lg border border-slate-200 py-1.5 z-30 text-left text-xs">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                router.push(
+                                  `/hospital-admin/doctors/profile?id=${doc.id}`
+                                );
+                                setActiveMenuId(null);
+                              }}
+                              className="w-full px-3 py-1.5 hover:bg-slate-50 text-blue-600 font-medium text-left cursor-pointer flex items-center gap-1.5"
+                            >
+                              <Eye className="w-3.5 h-3.5" />
+                              View Full Profile
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                onViewDoctor(doc);
+                                setActiveMenuId(null);
+                              }}
+                              className="w-full px-3 py-1.5 hover:bg-slate-50 text-slate-700 text-left cursor-pointer"
+                            >
+                              Quick Preview
+                            </button>
+                            <div className="my-1 border-t border-slate-100" />
                             <button
                               type="button"
                               onClick={() => {

@@ -34,18 +34,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { name: 'Hospital Profile', icon: Building2, href: '/hospital-admin/profile' },
     { name: 'Doctor Management', icon: UserCheck, href: '/hospital-admin/doctors' },
     { name: 'Add Doctor', icon: UserPlus, href: '/hospital-admin/doctors/add' },
-    { name: 'Doctor Verification', icon: ShieldCheck, href: '#doctor-verification' },
-    { name: 'Departments', icon: Network, href: '#departments' },
-    { name: 'Staff & Roles', icon: Users, href: '#staff-roles' },
-    { name: 'Access Audit Logs', icon: FileText, href: '#access-audit' },
-    { name: 'Emergency Access Audit', icon: AlertTriangle, href: '#emergency-audit' },
-    { name: 'Security & Settings', icon: Settings, href: '#security-settings' },
-    { name: 'Notifications', icon: Bell, href: '#notifications' },
+    { name: 'Doctor Verification', icon: ShieldCheck, href: '/hospital-admin/doctor-verification' },
+    { name: 'Departments', icon: Network, href: '/hospital-admin/departments' },
+    { name: 'Staff & Roles', icon: Users, href: '/hospital-admin/staff-roles' },
+    { name: 'Access Audit Logs', icon: FileText, href: '/hospital-admin/access-audit' },
+    { name: 'Emergency Access Audit', icon: AlertTriangle, href: '/hospital-admin/emergency-access' },
+    { name: 'Security & Settings', icon: Settings, href: '/hospital-admin/security-settings' },
+    { name: 'Notifications', icon: Bell, href: '/hospital-admin/notifications' },
   ];
 
   return (
     <aside className="w-64 min-w-64 bg-gradient-to-b from-[#EFF6FD] via-[#F3F8FE] to-[#E7F3FD] border-r border-[#D9E8F7] flex flex-col justify-between h-screen sticky top-0 left-0 select-none z-30">
-      <div className="flex flex-col flex-1 overflow-y-auto pt-4 pb-3 px-3.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+      <div className="flex flex-col flex-1 sidebar-scroll pt-4 pb-3 px-3.5">
         {/* Top Hospital Branding */}
         <Link
           href="/hospital-admin"
@@ -76,7 +76,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
           {navItems.map((item) => {
             const Icon = item.icon;
             const isRouteMatch =
-              item.href.startsWith('/') && pathname === item.href;
+              item.href.startsWith('/') &&
+              (pathname === item.href ||
+                (item.href !== '/hospital-admin' && pathname?.startsWith(item.href)));
             const isActive = activeTab ? activeTab === item.name : isRouteMatch;
 
             const buttonContent = (
