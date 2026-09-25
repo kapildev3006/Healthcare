@@ -132,6 +132,8 @@ export function DoctorSidebar({
             const isActive =
               item.href === '/doctor'
                 ? pathname === '/doctor' || pathname === '/doctor/dashboard'
+                : item.href === '/doctor/emergency-lookup'
+                ? pathname === '/doctor/emergency-lookup' || pathname === '/doctor/emergency-break-glass'
                 : pathname.startsWith(item.href);
 
             const Icon = item.icon;

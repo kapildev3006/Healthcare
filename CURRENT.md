@@ -47,17 +47,130 @@ Hospital Admin Emergency Access Audit Detail: COMPLETE_VERIFIED
 Hospital Admin Security & Settings: COMPLETE_VERIFIED
 Hospital Admin Notifications: COMPLETE_VERIFIED
 Doctor Dashboard: COMPLETE_VERIFIED
+Doctor Dashboard: COMPLETE_VERIFIED
 Doctor Patient Search: COMPLETE_VERIFIED
+Doctor Emergency Lookup: COMPLETE_VERIFIED
+Doctor Emergency Break-Glass: COMPLETE_VERIFIED
+Doctor My Patients: COMPLETE_VERIFIED
 Independent Sidebar & Workspace Scrolling: COMPLETE_VERIFIED
 System Admin design foundation: NOT_STARTED
 
-Current task: Configured separate, independent scrollbars for sidebar and page work area across both Doctor and Hospital Admin portals:
-- Lock browser outer window to prevent page-level double-scrolling (`html, body { height: 100%; overflow: hidden; }`).
-- Sidebar: Dedicated independent scroll container (`h-screen overflow-y-auto sidebar-scroll sticky top-0`) with custom sleek 5px scrollbar and transparent track.
-- Page Work Area: Independent scroll container (`flex-1 h-screen overflow-y-auto workspace-scroll`) with custom 8px smooth rounded scrollbar.
-- Header pinned at the top of the workspace while page content scrolls underneath cleanly.
-- Routing & Navigation: Accessible at `/doctor/patient-search`. Doctor Sidebar with active blue pill state for "Patient Search".
-- Top Greeting & Meta: Title "Patient Search", subtitle "Find and access patient records securely", with CityCare Hospital and Tue, 16 Sep 2026 header.
+Current task: Implemented dedicated Doctor My Patients page strictly matching design-references/hospital/doctor/my-patients.png:
+- Routing & Navigation: Accessible at `/doctor/patients`. Doctor Sidebar item "My Patients" highlighted in active blue pill state.
+- Top Header (`MyPatientsHeader.tsx`):
+  * Blue users icon inside rounded container, title "My Patients", subtitle "Patients you have access to and are currently managing."
+  * CityCare Hospital metadata (Noida, Uttar Pradesh) and Live DateTime: Tue, 16 Sep 2026 • 10:24 AM with clock icon.
+- Stats Row (`MyPatientsStatsRow.tsx`):
+  * 4 Stats cards:
+    1. Total Patients: 48 with "↑ 12% from last month" (green trend)
+    2. Active Treatments: 16 with "Ongoing care"
+    3. Follow-ups Due: 28 with "In next 7 days"
+    4. New This Month: 6 with "↑ 20% from last month" (green trend)
+- Left Column:
+  * `MyPatientsFilterBar.tsx`:
+    - Top row: "Search in my patients..." input with search icon, and "+ Add Patient" electric blue button.
+    - Bottom row: "All Conditions" dropdown, "All Status" dropdown, "Last Visit (Any)" dropdown, and "Sort by Last Visit (Newest)" dropdown.
+  * `MyPatientsTableCard.tsx`:
+    - Header: "My Patients (48)" with "Export" button and "List" / "Card" view toggles.
+    - Table with 8 exact rows matching reference image:
+      1. Rohit Sharma • MLK00123 / 91-2345-6789-1234 • 45 / M • Type 2 Diabetes • 12 Sep 2026 • Active (green pill) • View / •••
+      2. Neha Verma • MLK00456 / 91-2345-6789-5678 • 29 / F • Hypertension • 10 Sep 2026 • Active (green pill) • View / •••
+      3. Amit Kumar • MLK00789 / 91-2345-6789-9012 • 62 / M • Cardiac Care • 05 Sep 2026 • Follow-up Due (amber pill) • View / •••
+      4. Priya Singh • MLK00987 / 91-2345-6789-1357 • 33 / F • Asthma • 02 Sep 2026 • Active (green pill) • View / •••
+      5. Vikas Mehta • MLK01122 / 91-2345-6789-2468 • 37 / M • Orthopedics • 28 Aug 2026 • Active (green pill) • View / •••
+      6. Kavya Sharma • MLK01333 / 91-2345-6789-9753 • 27 / F • Thyroid Disorder • 25 Aug 2026 • Needs Review (red pill) • View / •••
+      7. Suresh Gupta • MLK01544 / 91-2345-6789-8642 • 51 / M • COPD • 20 Aug 2026 • Follow-up Due (amber pill) • View / •••
+      8. Anjali Mehra • MLK01755 / 91-2345-6789-1111 • 41 / F • Migraine • 18 Aug 2026 • Active (green pill) • View / •••
+    - Bottom Pagination: "Showing 1 to 8 of 48 patients", « 1 (active) 2 3 4 5 ».
+- Right Column:
+  * `MyPatientsQuickActionsCard.tsx`:
+    - ⚡ Quick Actions header with 4 action tiles:
+      1. Search Patient (Find and view patient records) -> links to `/doctor/patient-search`
+      2. Emergency Lookup (Access critical information) -> links to `/doctor/emergency-lookup`
+      3. Request Patient Access (Send access request for a patient)
+      4. Create New Encounter (Start a new consultation)
+  * `UpcomingFollowupsCard.tsx`:
+    - Upcoming Follow-ups header with "View All" link.
+    - 4 follow-up items matching reference image:
+      1. Neha Verma • Diabetes follow-up • 17 Sep 2026
+      2. Amit Kumar • Cardiology review • 18 Sep 2026
+      3. Suresh Gupta • Lab results discussion • 19 Sep 2026
+      4. Kavya Sharma • Thyroid review • 20 Sep 2026
+  * `PatientDataSecureCard.tsx`:
+    - Solid green shield icon, "Patient Data is Secure", "You can only view patients with explicit access and consent.", "View Access Policy →".
+- Interactive Modals:
+  * `AddPatientModal.tsx`: Form to add new patient to panel.
+  * `PatientQuickViewModal.tsx`: Detailed patient preview when clicking View.
+  * `AccessPolicyModal.tsx`: ABDM access policy viewer.
+- Verification:
+  * `npm run build` compiled all 26 static routes with 0 errors.
+  * `http://localhost:3000/doctor/patients` verified live with HTTP 200 OK.
+- Routing & Navigation: Accessible at `/doctor/emergency-break-glass` and linked to Emergency Lookup navigation. Doctor Sidebar item "Emergency Lookup" highlighted in active blue pill state.
+- Header (`BreakGlassPageHeader.tsx`):
+  * Red alert triangle icon, title "Emergency Lookup", subtitle "Request break-glass access for emergency situations when patient consent is not available."
+  * CityCare Hospital metadata (Noida, Uttar Pradesh) and Live DateTime: Tue, 16 Sep 2026 • 10:24 AM.
+- Warning Banner (`EmergencyWarningBanner.tsx`):
+  * Red alert triangle icon, headline "This feature is for true emergency situations only."
+  * "All emergency access is strictly audited and the patient will be notified after access. Misuse may result in disciplinary action."
+- Left Column:
+  * `RequestEmergencyAccessFormCard.tsx`:
+    - Header with blue lock badge, title "Request Emergency Access", subtitle "Enter patient details and reason for emergency access."
+    - "Search Patient *" input with search icon, autocomplete dropdown with mock patient records.
+    - "Access Scope *" select dropdown ("Critical Information Only", "Full Medical Record") with helper text "Includes allergies, medications, major conditions, and recent encounters."
+    - "Reason for Emergency Access *" select dropdown with 8 clinical emergency reasons.
+    - "Access Duration *" select dropdown (4 hours default, 1h, 8h, 12h, 24h) with helper text "Minimum duration for emergency access."
+    - "Additional Details (Optional)" textarea with dynamic 0/500 character counter.
+    - Amber/yellow confirmation callout with checkbox: "I confirm this is a genuine emergency situation and patient consent is not available. I understand that this access will be logged, monitored, and the patient will be notified."
+    - Red action button: "[Lock] Request Emergency Access".
+  * `RecentEmergencyAccessesTableCard.tsx`:
+    - Header with blue clock icon, title "Recent Emergency Accesses", subtitle "View your recent break-glass access requests.", and "View All Logs →" link.
+    - Table with 5 exact rows matching reference image:
+      1. Rahul Kumar • UHID: MLK00456 (RK avatar) • Unconscious patient in ER • Critical Info Only • 15 Sep 2026, 02:15 PM • 4 hours • Completed (green pill) • View Details
+      2. Sneha Gupta • UHID: MLK01011 (SG avatar) • Road traffic accident • Critical Info Only • 10 Sep 2026, 11:40 AM • 4 hours • Completed (green pill) • View Details
+      3. Neha Tiwari • UHID: MLK01321 (NT avatar) • Severe breathing difficulty • Full Medical Record • 05 Sep 2026, 09:30 PM • 8 hours • Completed (green pill) • View Details
+      4. Amit Rao • UHID: MLK01234 (AR avatar) • Cardiac emergency • Critical Info Only • 28 Aug 2026, 07:20 PM • 4 hours • Completed (green pill) • View Details
+      5. Vikram Singh • UHID: MLK00901 (VK avatar) • Unconscious patient • Critical Info Only • 18 Aug 2026, 01:10 PM • 4 hours • Expired (slate pill) • View Details
+- Right Column:
+  * `WhenToUseCard.tsx`: Blue info circle with 5 green checkmark items (Life-threatening situations, Patient unconscious or unable to provide consent, No family member or caregiver available, Critical treatment decisions required immediately, Access to allergies/medications/history essential).
+  * `WhatHappensNextCard.tsx`: 4 numbered step circles (1: Logged with time/reason/details, 2: Temporary access to critical patient data, 3: Patient notified via app, 4: Audited for compliance and safety).
+  * `ImportantGuidelinesCard.tsx`: Red alert triangle with 5 red bullet rules.
+  * `NeedHelpCard.tsx`: Blue question mark card directing to department head or hospital administrator.
+- Interactive Modals:
+  * `BreakGlassDetailModal.tsx`: Comprehensive audit log inspector with clinical justification, legal ABDM/HIPAA compliance sign-off, and direct link to Patient Emergency Dossier.
+- Scrollbar Architecture:
+  * Independent scrolling preserved with hidden scrollbars for sidebar (`.sidebar-scroll`) and workspace area (`.workspace-scroll`).
+- Verification:
+  * `npm run build` compiled all 25 static routes with 0 errors.
+  * `http://localhost:3000/doctor/emergency-break-glass` verified with HTTP 200 OK.
+- Routing & Navigation: Accessible at `/doctor/emergency-lookup`. Doctor Sidebar item "Emergency Lookup" highlighted in active blue pill state.
+- Top Emergency Greeting: Red alert triangle icon, title "Emergency Lookup", subtitle "Get immediate access to critical patient information in emergency situations.", with CityCare Hospital and Tue, 16 Sep 2026 header.
+- Left Column:
+  * EmergencySearchCard:
+    - 3 Tabs: Search by Health ID / UHID (active), Scan QR Code, Search by Phone.
+    - Input bar with "Lookup" electric blue button and example hints (`91-2345-6789-1234 or MLK00123`).
+  * PatientEmergencyProfileCard:
+    - Patient avatar, name **Rohit Sharma**, copyable UHID (`MLK00123`), copyable Health ID (`91-2345-6789-1234`).
+    - Demographics pills: `45 years`, `Male`, `B+` (red pill).
+    - `✔ Identity Verified` green badge, `Last Updated 12 Sep 2026`, `Primary Hospital CityCare Hospital`.
+  * CriticalMedicalSnapshotRow (3 Cards):
+    - Allergies (2): Penicillin (Reaction: Anaphylaxis • Severe), Ibuprofen (Reaction: Rash, Itching • Moderate).
+    - Chronic Conditions (3): Type 2 Diabetes Mellitus (Since 2018 ⓘ), Hypertension (Since 2016 ⓘ), Asthma (Since 2010).
+    - Current Medications (4): Metformin 500mg (1 tablet twice daily), Amlodipine 5mg (1 tablet once daily), Salbutamol Inhaler (As needed), Atorvastatin 10mg (1 tablet at night).
+  * EmergencyHistoryTablesRow (2 Tables):
+    - Recent Encounters: 12 Sep 2026 (General Medicine • Follow-up [Diabetes] • Dr. Neha Verma »), 05 Aug 2026 (Cardiology • Hypertension Review • Dr. Amit Kumar), 18 Jun 2026 (Pulmonology • Asthma Consultation • Dr. Priya Singh), 10 Apr 2026 (Emergency • Breathing Difficulty • Dr. Suresh Mehta).
+    - Recent Reports: 12 Sep 2026 (Blood Test • HbA1c: 7.2% ↑), 05 Aug 2026 (ECG • Normal), 18 Jun 2026 (Chest X-Ray • Mild hyperinflation), 10 Apr 2026 (Blood Test • Normal).
+  * EmergencyDisclaimerBanner: Blue notice banner "This information is provided for emergency care. Please verify with the patient and use clinical judgment."
+- Right Column:
+  * EmergencyNoticeSidebarCard: Red lightning bolt icon, "For Emergency Use Only", "View Access Policy →".
+  * CriticalAlertActionCard: Red alert banner "Critical Information Available", primary "View Full Medical Record →" button, secondary "Request Extended Access" button.
+  * EmergencyAccessLogCard: 4 logged access sessions (You accessed this record - Current, Dr. Sarah Khan - Emergency, ER Department - Emergency, Dr. Amit Kumar - Consultation).
+  * RequestAccessCtaCard: Green lock icon with "Request Patient Access →" button.
+- Interactive Modals:
+  * FullMedicalRecordModal: Longitudinal emergency record viewer with emergency brief PDF export.
+  * RequestExtendedAccessModal: 12h/24h/48h/72h extended access duration selector and clinical justification form.
+  * QrScannerLookupModal: Viewfinder camera simulator for scanning emergency health cards.
+  * AccessPolicyModal: HIPAA/ABDM emergency override access policy.
+- Verification: `npm run build` compiled all 24 static routes with 0 errors; verified with HTTP 200 OK.
 - Left Search & Results Section:
   * PatientSearchFiltersCard:
     - 4 Tabs: Search by Details (active), Search by Health ID, Search by Phone, Scan QR Code.
